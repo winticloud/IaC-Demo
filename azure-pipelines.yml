@@ -25,4 +25,4 @@ steps:
     azureSubscription: 'SVCConnectionConnectivitySub'
     inlineScript: |
      az group create --name $(varResourceGroupName)  --location $(location)
-     az deployment sub create --location $(location) --template-file $(varTemplateFile) --parameters @$(varParameterFile)
+     az deployment sub create --location $(location) --template-file $(varTemplateFile) --parameters $(varParameterFile)
