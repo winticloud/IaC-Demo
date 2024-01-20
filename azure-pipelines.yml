@@ -10,8 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  varTemplateFile: 'main.bicep'
-  varParameterFile: 'parameters.bicepparam'
+  varTemplateFile: './fortigate/main.bicep'
+  varParameterFile: './fortigate/parameters/parameters.bicepparam'
   varDeploymentName: 'fortigate-deployment'
   varLocation: 'switzerlandnorth'
   varResourceGroupName: 'pipeline-test'
@@ -19,9 +19,11 @@ variables:
 steps:
 - task: AzureCLI@2
   inputs:
-  azureSubscription: 'Connectivity'
-  scriptType: 'pscore'
-  inlineScript: |
-  az group create --name $(varResourceGroupName)  --location $(location)
-  az deployment sub create --location $(location) --template-file $(varTemplateFile) --parameters @$(varParameterFile)
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    powerShellErrorActionPreference: 'continue'
+    azureSubscription: 'Connectivity'
+    inlineScript: |
+     az group create --name $(varResourceGroupName)  --location $(location)
+     az deployment sub create --location $(location) --template-file $(varTemplateFile) --parameters @$(varParameterFile)
 
