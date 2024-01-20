@@ -10,8 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  varTemplateFile: 'main.bicep'
-  varParameterFile: 'parameters.bicepparam'
+  varTemplateFile: './fortigate/main.bicep'
+  varParameterFile: './fortigate/parameters/parameters.bicepparam'
   varDeploymentName: 'fortigate-deployment'
   varLocation: 'switzerlandnorth'
   varResourceGroupName: 'pipeline-test'
