@@ -9,11 +9,19 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  varTemplateFile: 'main.bicep'
+  varParameterFile: 'parameters.bicepparam'
+  varDeploymentName: 'fortigate-deployment'
+  varLocation: 'switzerlandnorth'
+  varResourceGroupName: 'pipeline-test'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+steps:
+- task: AzureCLI@2
+  inputs:
+  azureSubscription: 'Connectivity'
+  scriptType: 'pscore'
+  inlineScript: |
+  az group create --name $(varResourceGroupName)  --location $(location)
+  az deployment sub create --location $(location) --template-file $(varTemplateFile) --parameters @$(varParameterFile)
+
