@@ -20,9 +20,9 @@ steps:
 - task: AzureCLI@2
   displayName: Azure CLI
   inputs:
-    azureSubscription: <Name of the Azure Resource Manager service connection>
-    scriptType: ps
-    scriptLocation: inlineScript
+    azureSubscription: 'SVCConnectionConnectivitySub'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
     inlineScript: |
       az --version
       az account show
