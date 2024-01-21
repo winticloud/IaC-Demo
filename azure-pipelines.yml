@@ -17,9 +17,12 @@ variables:
   varResourceGroupName: 'pipeline-test'
 
 steps:
-    - task: AzureCLI@2
-      inputs:
-        azureSubscription: 'SVCConnectionConnectivitySub'
-        scriptType: 'pscore'
-        scriptLocation: 'inlineScript'
-        inlineScript: 'az group create --name $(varResourceGroupName)  --location $(location)'
+- task: AzureCLI@2
+  displayName: Azure CLI
+  inputs:
+    azureSubscription: <Name of the Azure Resource Manager service connection>
+    scriptType: ps
+    scriptLocation: inlineScript
+    inlineScript: |
+      az --version
+      az account show
