@@ -22,4 +22,4 @@ steps:
     azureSubscription: 'SVCConnectionConnectivitySub'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    New-AzSubscriptionDeployment -Name test -Location $(location) -TemplateFile $(varTemplateFile) -TemplateParameterFile  $(varParameterFile)
+    New-AzSubscriptionDeployment -Name test -Location $(location) -TemplateFile $(varTemplateFile) -TemplateParameterFile $(varParameterFile)
