@@ -22,4 +22,5 @@ steps:
     azureSubscription: 'SVCConnectionConnectivitySub'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'az group create --name $(varResourceGroupName)  --location $(location)'
+    #inlineScript: 'az group create --name $(varResourceGroupName)  --location $(location)'
+    New-AzSubscriptionDeployment -Name test -Location $(location) -TemplateFile $(varTemplateFile) -TemplateParameterFile  $(varParameterFile)
