@@ -17,8 +17,9 @@ variables:
   varResourceGroupName: 'pipeline-test'
 
 steps:
-- task: PowerShell@2
+- task: AzureCLI@2
   inputs:
-    targetType: 'inline'
-    script: 'New-AzSubscriptionDeployment -Name test -Location $(location) -TemplateFile $(varTemplateFile) -TemplateParameterFile  $(varParameterFile)'
-    errorActionPreference: 'continue'
+    azureSubscription: 'SVCConnectionConnectivitySub'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'az group create --name $(varResourceGroupName)  --location $(location)'
