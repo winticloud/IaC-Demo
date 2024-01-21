@@ -18,9 +18,9 @@ variables:
 
 steps:
 - task: PowerShell@2
-  inputs:
-    scriptLocation: 'inlineScript'
+inputs:
+    targetType: 'inline'
     powerShellErrorActionPreference: 'continue'
     azureSubscription: 'SVCConnectionConnectivitySub'
-    inlineScript: |
+    script: |
      New-AzSubscriptionDeployment -Name test -Location $(location) -TemplateFile $(varTemplateFile) -TemplateParameterFile  $(varParameterFile)
