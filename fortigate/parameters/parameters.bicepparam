@@ -1,24 +1,35 @@
 using '../main.bicep'
 
 // conditional deployment
-param parDeployVnet = true    
+@description('Specifies whether to deploy a vnet')
+param parDeployVnet = true
+
+/// Specifies whether to deploy a bastion host.
+@description('Specifies whether to deploy a bastion host')
 param parDeployBastion = false
+
+/// Specifies whether to deploy private DNS.
+@description('Specifies whether to deploy private DNS')
 param parDeployPrivateDns = false
 
 param parSubscriptionId = '3e93b848-f45a-4efa-ae91-e508f932bfda'
 param parLocation = 'switzerlandnorth'
+@maxLength(3)
 param parLocationPostfix = 'csn'
+@maxLength(1)
 param parEnvironment = 'p'
+@maxLength(3)
 param parCustomerPrefix = 'aaa'
 
-param parKeyVaultName = '' 
-param parKeyVaultRg = ''
+param parKeyVaultName = 'myverysecurekeyvault1' 
+param parKeyVaultRg = 'RG-costs-dont-matter'
 param parAdminUserObjectID = '' 
 param parVpnGatewayPSK = '' 
 param parPublicIPToWhitelist = [] 
 
 param parAdminUsername = 'admin1234'
 param parAdminPassword = 'YoM@maSm3llsN0ic3'
+
 
 param parPrivateDnsZones = [
   'privatelink.azure-automation.net'
@@ -41,6 +52,7 @@ param parFortiImageVersion = '7.0.12'
 param parFortiImageSku = 'fortinet_fg-vm'
 param parFortiInstance = 'Standard_DS3_v2'
 param parFortiPrivateIp = '10.10.10.10'
+@description('IP Range for P2S VPN')
 param parP2sPrefix = '10.110.0.0/24'
 param parCustomerPublicIp = '1.1.1.1'
 

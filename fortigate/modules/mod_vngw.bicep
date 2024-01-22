@@ -12,7 +12,11 @@ param parBaseTagSet object
 var varAadTenant = 'https://login.microsoftonline.com/${tenant().tenantId}'
 var varAadIssuer = 'https://sts.windows.net/${tenant().tenantId}/'
 var varAadAudience = '41b23e61-6c1e-4545-b367-cd054e0ed4b4' //statice value for Azure VPN Client
-var varAuthKey = base64('NeedsToBeChang3dAfterDepl0yment')
+//create random string for auth key 
+
+
+// var varAuthKey = base64('NeedsToBeChang3dAfterDepl0yment')
+param parAuthKey string = 'uniqueString(newGuid(), utcNow())'
 
 resource resVpnGwIPs 'Microsoft.Network/publicIPAddresses@2023-04-01' = [for i in range(0,3):{
   name: '${parVngwName}-pip${i+1}'
@@ -33,9 +37,13 @@ resource resVpnGwIPs 'Microsoft.Network/publicIPAddresses@2023-04-01' = [for i i
   }) 
 }]
 
+//https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworkgateways?pivots=deployment-language-bicep
 resource resVpnNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2023-04-01' = {
   name: parVngwName
   location: parLocation
+  tags: union(parBaseTagSet, {
+    Description: 'virtual network gateway'
+  })
   properties: {
     sku: {
       name: 'VpnGw1'
@@ -43,11 +51,24 @@ resource resVpnNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2023-04-
     }
     gatewayType: 'Vpn'
     vpnType: 'RouteBased'
+    vpnGatewayGeneration: 'Generation1'
     enableBgp: true
     activeActive: true
+    adminState: 'Enabled'
+    allowRemoteVnetTraffic: true
+    disableIPSecReplayProtection: false
+    enableBgpRouteTranslationForNat: false
+    enableDnsForwarding: false
+    enablePrivateIpAddress: false
+    customRoutes: {
+      addressPrefixes: [
+        '192.168.168.0/24'
+        ]}
     bgpSettings: {
       asn: parBgpAsnPgw
+      bgpPeeringAddress: parBgpPeeringAddress
       /*
+
       bgpPeeringAddresses: [
         {
           customBgpIpAddresses: [
@@ -68,7 +89,8 @@ resource resVpnNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2023-04-
           id:  resVpnGwIPs[i].id
         }
         }
-      }]
+      }
+    ]
       vpnClientConfiguration: {
         vpnClientAddressPool: {
           addressPrefixes: [
@@ -84,16 +106,28 @@ resource resVpnNetworkGateway 'Microsoft.Network/virtualNetworkGateways@2023-04-
         aadTenant: varAadTenant
         aadAudience: varAadAudience
         aadIssuer: varAadIssuer
+        vpnClientIpsecPolicies: [
+          {
+            ipsecEncryption: 'GCMAES256'
+            ipsecIntegrity: 'GCMAES256'
+            ikeEncryption: 'GCMAES256'
+            ikeIntegrity: 'SHA384'
+            dhGroup: 'ECP384'
+            pfsGroup: 'ECP384'
+            saLifeTimeSeconds: 27000
+            saDataSizeKilobytes: 102400000
+          }
+        ]
       }
   }
-  tags: union(parBaseTagSet, {
-    Description: 'virtual network gateway'
-  })
 }
 
 resource resLocalNetworkGateway 'Microsoft.Network/localNetworkGateways@2023-04-01' = {
   name: parLocalGatewayName
   location: parLocation
+  tags: union(parBaseTagSet, {
+    Description: 'local virtual network gateway'
+  })
   properties: {
     bgpSettings: {
       asn: parBgpAsnLgw
@@ -101,16 +135,17 @@ resource resLocalNetworkGateway 'Microsoft.Network/localNetworkGateways@2023-04-
     }
     gatewayIpAddress: parCustomerPublicIP
   }
-  tags: union(parBaseTagSet, {
-    Description: 'local virtual network gateway'
-  })
 }
 
 resource resLngwConnection 'Microsoft.Network/connections@2022-11-01' = {
   name: '${parLocalGatewayName}-conn1'
   location: parLocation
+  tags: union(parBaseTagSet, {
+    Description: 'local virtual network gateway connection'
+  })
   properties: {
-    authorizationKey: varAuthKey
+    // The authorization key is used for authentication and encryption purposes in the IPsec connection.
+    authorizationKey: parAuthKey
     connectionType: 'IPsec'
     connectionProtocol: 'IKEv2'
     connectionMode: 'Default'
