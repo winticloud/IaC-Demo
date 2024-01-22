@@ -6,8 +6,8 @@ param parSubnets array
 var varLocation = resourceGroup().location
 
 
-resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for snet in parSubnets: if((snet.Name != 'GatewaySubnet') && (snet.Name != 'AzureBastionSubnet')) {
-  name: '${parVnetName}-nsg-${snet.name}'
+resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for loopSubnet in parSubnets: if ((loopSubnet.Name != 'GatewaySubnet') && (loopSubnet.Name != 'AzureBastionSubnet')) {
+  name: '${parVnetName}-nsg-${loopSubnet.name}'
   location: varLocation
 }]
 
@@ -21,15 +21,15 @@ name: parVnetName
         parNetPrefix
       ]
     }
-    subnets: [for (subnet, i) in parSubnets: {
-      name: '${subnet.name}'
+    subnets: [for (loopSubnet, i) in parSubnets: {
+      name: '${loopSubnet.name}'
       properties: {
-        addressPrefix: subnet.ipAddressRange
-        delegations: contains(subnet, 'delegations') ? subnet.delegations : null
-        privateEndpointNetworkPolicies: contains(subnet, 'privateEndpointNetworkPolicies') ? subnet.privateEndpointNetworkPolicies : null
-        privateLinkServiceNetworkPolicies: contains(subnet, 'privateLinkServiceNetworkPolicies') ? subnet.privateLinkServiceNetworkPolicies : null
-        serviceEndpoints: contains(subnet, 'serviceEndpoints') ? subnet.serviceEndpoints : null
-        networkSecurityGroup: subnet.name != 'GatewaySubnet' && subnet.name != 'AzureBastionSubnet' ? {
+        addressPrefix: loopSubnet.ipAddressRange
+        delegations: contains(loopSubnet, 'delegations') ? loopSubnet.delegations : null
+        privateEndpointNetworkPolicies: contains(loopSubnet, 'privateEndpointNetworkPolicies') ? loopSubnet.privateEndpointNetworkPolicies : null
+        privateLinkServiceNetworkPolicies: contains(loopSubnet, 'privateLinkServiceNetworkPolicies') ? loopSubnet.privateLinkServiceNetworkPolicies : null
+        serviceEndpoints: contains(loopSubnet, 'serviceEndpoints') ? loopSubnet.serviceEndpoints : null
+        networkSecurityGroup: loopSubnet.name != 'GatewaySubnet' && loopSubnet.name != 'AzureBastionSubnet' ? {
           id: resNsgs[i].id
         } : null
       }

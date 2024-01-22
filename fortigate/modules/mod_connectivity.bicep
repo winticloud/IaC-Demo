@@ -23,7 +23,7 @@ resource resVirtualNetworkRg 'Microsoft.Resources/resourceGroups@2022-09-01' = [
   tags: parBaseTagSet
 }]
 
-resource resPrivateDns 'Microsoft.Resources/resourceGroups@2022-09-01' = if (parDeployPrivateDns) {
+resource resPrivateDnsRg 'Microsoft.Resources/resourceGroups@2022-09-01' = if (parDeployPrivateDns) {
   name: parPrivateDnsRg
   location: parLocation
   tags: parBaseTagSet
@@ -108,9 +108,9 @@ module modPeerVnetSpoketoHub 'mod_vnetpeering.bicep' = {
   ]
 } */
 
-module modPrivateDNSHub 'mod_pdns.bicep' = [for (zone, i) in parPrivateDnsZones: if(parDeployPrivateDns) {
+module modPrivateDNSHub 'mod_pdns.bicep' = [for (zone, i) in parPrivateDnsZones: if (parDeployPrivateDns) {
   name: 'deploy-DNSZones-${uniqueString('zonesHub')}${i}'
-  scope: resPrivateDns
+  scope: resPrivateDnsRg
   params:{
     parPrivateDnsZone: zone
     parLinkName: 'linkToHub'
@@ -122,9 +122,9 @@ module modPrivateDNSHub 'mod_pdns.bicep' = [for (zone, i) in parPrivateDnsZones:
   ]
 }]
 
-module modPrivateDNSSpoke 'mod_pdns.bicep' = [for (zone,i) in parPrivateDnsZones: if(parDeployPrivateDns) {
+module modPrivateDNSSpoke 'mod_pdns.bicep' = [for (zone, i) in parPrivateDnsZones: if (parDeployPrivateDns) {
   name: 'deploy-DNSZones-${uniqueString('zonesSpoke')}${i}'
-  scope: resPrivateDns
+  scope: resPrivateDnsRg
   params:{
     parPrivateDnsZone: zone
     parLinkName: 'linkToSpoke'

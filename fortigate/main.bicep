@@ -5,8 +5,11 @@ param parVnetHubPrefix string
 param parVnetSpoke1Prefix string
 
 //deployment switches
+@description('Specifies whether to deploy a vnet')
 param parDeployVnet bool
+@description('Specifies whether to deploy Bastion Host')
 param parDeployBastion bool
+@description('Specifies whether to deploy Private DNS Zones')
 param parDeployPrivateDns bool
 
 param parSubscriptionId string
@@ -21,7 +24,6 @@ param parAdminUsername string
 param parAdminPassword string
 
 
-output outAdminPasswordOutput string = parAdminPassword
 //network parameters
 param parHubVnetName string
 param parHubVnetRg string
