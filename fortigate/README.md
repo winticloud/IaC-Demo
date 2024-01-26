@@ -4,19 +4,19 @@
 
 | Symbolic Name | Source | Description |
 | --- | --- | --- |
-| modConnectivity | modules/mod_connectivity.bicep |  |
-| modFortiNVA | modules/mod_fnva.bicep |  |
-| modKeyvault | modules/mod_keyvault.bicep |  |
+| modConnectivity | modules/mod_connectivity.bicep | module to deploy conntectivity (vnet, private DNS, VPN GW, bastion host) |
+| modFortiNVA | modules/mod_fnva.bicep | module to deploy fortigate NVA (NICs, public IP, VM, NSG) |
+| modKeyvault | modules/mod_keyvault.bicep | module to deploy keyvault |
 
 ## Resources
 
 | Symbolic Name | Type | Description |
 | --- | --- | --- |
-| resFortiRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) |  |
-| resKeyvaultRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) |  |
-| resVnetExists | [Microsoft.Network/virtualNetworks](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks) |  |
-| resVnetRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) |  |
-| resVnetRgExists | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) |  |
+| resFortiRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) | new fortigate resource group |
+| resKeyvaultRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) | new keyvault resource group |
+| resVnetExists | [Microsoft.Network/virtualNetworks](https://learn.microsoft.com/en-us/azure/templates/microsoft.network/virtualnetworks) | existing hub vnet resource |
+| resVnetRg | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) | new hub vnet resource group |
+| resVnetRgExists | [Microsoft.Resources/resourceGroups](https://learn.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups) | existing hub vnet resource group |
 
 ## Parameters
 
@@ -54,3 +54,24 @@
 | parVnetSpoke1Prefix | string |  |  |
 | parVpnGatewayPSK | string |  |  |
 
+## User Defined Data Types (UDDTs)
+
+| Name | Type | Description |
+| --- | --- | --- |
+| myStringType | string | data type |
+
+## Variables
+
+| Name |
+| --- |
+| varFortiName |
+| varFortiRgName |
+| varPrivateSubnetId |
+| varPublicSubnetId |
+| varRouteTableName |
+
+## Outputs
+
+| Name | Type | Description |
+| --- | --- | --- |
+| outFortiRgName | string | output fortigate name |
