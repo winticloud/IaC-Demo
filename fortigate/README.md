@@ -31,9 +31,9 @@
 | parBgpPeeringAddress | string |  |  |
 | parCustomerPrefix | string |  |  |
 | parCustomerPublicIp | string |  |  |
-| parDeployBastion | bool | Specifies whether to deploy Bastion Host |  |
-| parDeployPrivateDns | bool | Specifies whether to deploy Private DNS Zones |  |
-| parDeployVnet | bool | Specifies whether to deploy a vnet |  |
+| parDeployBastion | bool | Specifies whether to deploy Bastion Host | false |
+| parDeployPrivateDns | bool | Specifies whether to deploy Private DNS Zones | false |
+| parDeployVnet | bool | Specifies whether to deploy a vnet | false |
 | parEnvironment | string |  |  |
 | parFortiImageSku | string |  |  |
 | parFortiImageVersion | string |  |  |

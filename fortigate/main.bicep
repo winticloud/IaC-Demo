@@ -6,11 +6,11 @@ param parVnetSpoke1Prefix string
 
 //deployment switches
 @description('Specifies whether to deploy a vnet')
-param parDeployVnet bool
+param parDeployVnet bool = false
 @description('Specifies whether to deploy Bastion Host')
-param parDeployBastion bool
+param parDeployBastion bool = false
 @description('Specifies whether to deploy Private DNS Zones')
-param parDeployPrivateDns bool
+param parDeployPrivateDns bool = false
 
 param parSubscriptionId string
 param parLocation string
@@ -70,7 +70,7 @@ param parPublicIPToWhitelist array
 var varFortiRgName = '${parEnvironment}${parCustomerPrefix}-fw1-${parLocationPostfix}-rg'
 @description('fortigate name')
 var varFortiName = '${parEnvironment}${parCustomerPrefix}-fw1-${parLocationPostfix}'
-@description('ropute table')
+@description('rpute table')
 var varRouteTableName = ''
 
 var varPublicSubnetId = resourceId(subscription().subscriptionId,parHubVnetRg,'Microsoft.Network/VirtualNetworks/Subnets',parHubVnetName,'FirewallPublicSubnet')
