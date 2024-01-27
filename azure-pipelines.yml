@@ -17,4 +17,10 @@ variables:
   varResourceGroupName: 'pipeline-test'
 
 steps:
-- pwsh: C:\_dev\IaC-Demo\fortigate\run-main.bicep-deployment.ps1
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'SVCConnectionConnectivitySub'
+    scriptType: 'ps'
+    scriptLocation: 'scriptPath'
+    scriptPath: 'C:\_dev\IaC-Demo\fortigate\run-main.bicep-deployment.ps1'
+    powerShellErrorActionPreference: 'continue'
