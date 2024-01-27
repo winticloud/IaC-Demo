@@ -27,6 +27,14 @@ param parKeyVaultSecretsName string
 // @secure()
 // param parAdminPassword string
 
+@description('''
+Storage account name restrictions:
+- Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only.
+- Your storage account name must be unique within Azure. No two storage accounts can have the same name.
+''')
+@minLength(3)
+@maxLength(24)
+param storageAccountName string
 
 //network parameters
 param parHubVnetName string
