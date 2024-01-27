@@ -18,19 +18,14 @@ param parLocationPostfix string
 param parEnvironment string
 param parCustomerPrefix string
 
-@description('''
-Storage account name restrictions:
-- Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only.
-- Your storage account name must be unique within Azure. No two storage accounts can have the same name.
-''')
-@minLength(3)
-@maxLength(24)
-param storageAccountName string
-
 param parAdminUsername string
-
 @secure()
-param parAdminPassword string
+param parAdminPasswordSecret string
+@secure()
+param parKeyVaultSecretsName string
+
+// @secure()
+// param parAdminPassword string
 
 
 //network parameters
@@ -112,20 +107,27 @@ resource resKeyvaultRg 'Microsoft.Resources/resourceGroups@2022-09-01' = {
   location: parLocation
 }
 
-@description('module to deploy keyvault')
-module modKeyvault 'modules/mod_keyvault.bicep' = {
-  name: 'deploy-keyvault'
+// @description('module to deploy keyvault')
+// module modKeyvault 'modules/mod_keyvault.bicep' = {
+//   name: 'deploy-keyvault'
+//   scope: resKeyvaultRg
+//   params: {
+//     parLocation: parLocation
+//     parKeyVaultName: parEnvironment
+//     parAdminUserObjectID: parCustomerPrefix
+//     parVirtualMachineLocalAdminPassword: parAdminPassword
+//     parVpnGatewayPSK: parVpnGatewayPSK
+//     parPublicIPToWhitelist: parPublicIPToWhitelist
+//     parBaseTagSet: parBaseTagSet
+//   }
+// }
+
+@description('the keyvault and secret was created beforehand with the powershell script')
+resource resKeyVault 'Microsoft.KeyVault/vaults@2019-09-01'  existing  = { 
+  name: 'name'
   scope: resKeyvaultRg
-  params: {
-    parLocation: parLocation
-    parKeyVaultName: parEnvironment
-    parAdminUserObjectID: parCustomerPrefix
-    parVirtualMachineLocalAdminPassword: parAdminPassword
-    parVpnGatewayPSK: parVpnGatewayPSK
-    parPublicIPToWhitelist: parPublicIPToWhitelist
-    parBaseTagSet: parBaseTagSet
-  }
 }
+
 
 @description('module to deploy conntectivity (vnet, private DNS, VPN GW, bastion host)')
 module modConnectivity 'modules/mod_connectivity.bicep' = if (parDeployVnet) {
@@ -163,7 +165,8 @@ module modFortiNVA 'modules/mod_fnva.bicep' = {
     parFortiPrivateNicIp:  '${substring(parVnetHubPrefix,0,6)}.3.4'
     parFortiPublicNicIp:  '${substring(parVnetHubPrefix,0,6)}.2.4'
     parAdminUsername: parAdminUsername
-    parAdminPassword: parAdminPassword
+    // parAdminPassword: parAdminPassword
+    parAdminPassword: parAdminPasswordSecret
     parPublicSubnetId: varPublicSubnetId
     parPrivateSubnetId: varPrivateSubnetId
     parBaseTagSet: parBaseTagSet

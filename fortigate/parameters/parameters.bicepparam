@@ -19,17 +19,18 @@ param parLocationPostfix = 'csn'
 @maxLength(1)
 param parEnvironment = 'p'
 @maxLength(3)
-param parCustomerPrefix = 'aaa'
+param parCustomerPrefix = 'wcl'
 
-param parKeyVaultName = 'myverysecurekeyvault1' 
-param parKeyVaultRg = 'RG-costs-dont-matter'
+param parKeyVaultName = '${parEnvironment}${parCustomerPrefix}-kv1-${parLocationPostfix}' 
+param parKeyVaultRg = '${parEnvironment}${parCustomerPrefix}-kv1-${parLocationPostfix}-rg' 
+param parKeyVaultSecretsName = 'FortigateAdminPassword'
+
+param parAdminUsername = 'localadmin'
+param parAdminPasswordSecret = getSecret(parSubscriptionId, parKeyVaultRg, parKeyVaultName, parKeyVaultSecretsName)
+
 param parAdminUserObjectID = '' 
 param parVpnGatewayPSK = '' 
 param parPublicIPToWhitelist = [] 
-
-param parAdminUsername = 'admin1234'
-param parAdminPassword = 'YoM@maSm3llsN0ic3'
-
 
 param parPrivateDnsZones = [
   'privatelink.azure-automation.net'
