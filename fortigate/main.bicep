@@ -75,11 +75,8 @@ param parPublicIPToWhitelist array
 
 
 // build naming convention based resource names
-@description('fortigate resource group')
 var varFortiRgName = '${parEnvironment}${parCustomerPrefix}-fw1-${parLocationPostfix}-rg'
-@description('fortigate name')
 var varFortiName = '${parEnvironment}${parCustomerPrefix}-fw1-${parLocationPostfix}'
-@description('rpute table')
 var varRouteTableName = ''
 
 var varPublicSubnetId = resourceId(subscription().subscriptionId,parHubVnetRg,'Microsoft.Network/VirtualNetworks/Subnets',parHubVnetName,'FirewallPublicSubnet')
