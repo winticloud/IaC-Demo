@@ -17,4 +17,4 @@ variables:
   varResourceGroupName: 'pipeline-test'
 
 steps:
-- powershell: .\run-main.bicep-deployment.ps1
+- powershell: C:\_dev\IaC-Demo\fortigate\run-main.bicep-deployment.ps1
