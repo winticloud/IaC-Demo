@@ -17,4 +17,4 @@ variables:
   varResourceGroupName: 'pipeline-test'
 
 steps:
-- powershell: .\parameters\run-main.bicep-deployment.ps1
+- powershell: ./parameters/run-main.bicep-deployment.ps1
