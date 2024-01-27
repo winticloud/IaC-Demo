@@ -22,37 +22,6 @@
 
 | Name | Type | Description | Default |
 | --- | --- | --- | --- |
-| parAdminPassword | securestring |  |  |
-| parAdminUserObjectID | string |  |  |
-| parAdminUsername | string |  |  |
-| parBaseTagSet | object |  |  |
-| parBgpAsnLgw | int |  |  |
-| parBgpAsnPgw | int |  |  |
-| parBgpPeeringAddress | string |  |  |
-| parCustomerPrefix | string |  |  |
-| parCustomerPublicIp | string |  |  |
-| parDeployBastion | bool | Specifies whether to deploy Bastion Host | false |
-| parDeployPrivateDns | bool | Specifies whether to deploy Private DNS Zones | false |
-| parDeployVnet | bool | Specifies whether to deploy a vnet | false |
-| parEnvironment | string |  |  |
-| parFortiImageSku | string |  |  |
-| parFortiImageVersion | string |  |  |
-| parFortiInstance | string |  |  |
-| parFortiPrivateIp | string |  |  |
-| parHubVnetName | string |  |  |
-| parHubVnetRg | string |  |  |
-| parKeyVaultName | string |  |  |
-| parKeyVaultRg | string |  |  |
-| parLocation | string |  |  |
-| parLocationPostfix | string |  |  |
-| parP2sPrefix | string |  |  |
-| parPrivateDnsZones | array |  |  |
-| parPublicIPToWhitelist | array |  |  |
-| parSubscriptionId | string |  |  |
-| parVirtualNetworks | array |  |  |
-| parVnetHubPrefix | string |  |  |
-| parVnetSpoke1Prefix | string |  |  |
-| parVpnGatewayPSK | string |  |  |
 | storageAccountName | string | Storage account name restrictions:
 <br>- Storage account names must be between 3 and 24 characters in length and may contain numbers and lowercase letters only.
 <br>- Your storage account name must be unique within Azure. No two storage accounts can have the same name.
