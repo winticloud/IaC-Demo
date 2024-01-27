@@ -29,7 +29,7 @@ resource resPrivateDnsRg 'Microsoft.Resources/resourceGroups@2022-09-01' = if (p
   tags: parBaseTagSet
 }
 
-module modVirtualNetworks './mod_vnet.bicep' = [for loopNet in parVirtualNetworks: {
+module modVirtualNetworks 'mod_vnet.bicep' = [for loopNet in parVirtualNetworks: {
   name: 'deploy-${loopNet.vnetName}'
   scope: resourceGroup(loopNet.resourceGroup)
   params: { 
@@ -43,7 +43,7 @@ module modVirtualNetworks './mod_vnet.bicep' = [for loopNet in parVirtualNetwork
   ]
 }]
 
-module modVngw './mod_vngw.bicep' = {
+module modVngw 'mod_vngw.bicep' = {
   name: 'deploy-vpn-gateway'
   scope: resVirtualNetworkRg[0]
   params:{
