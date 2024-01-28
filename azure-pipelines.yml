@@ -24,3 +24,4 @@ steps:
     scriptLocation: 'scriptPath'
     scriptPath: 'C:\_dev\IaC-Demo\fortigate\run-main.bicep-deployment.ps1'
     powerShellErrorActionPreference: 'continue'
+
