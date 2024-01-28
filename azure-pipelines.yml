@@ -26,6 +26,6 @@ jobs:
           subscriptionId: '3e93b848-f45a-4efa-ae91-e508f932bfda'
           location: 'Switzerland North'
           templateLocation: 'Linked artifact'
-          csmFile: 'main.bicep'
-          csmParametersFile: 'parameters\parameters.bicepparam'
+          csmFile: $(varParameterFile)
+          csmParametersFile: $(varTemplateFile)
           deploymentMode: 'Validation'
