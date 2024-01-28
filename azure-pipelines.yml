@@ -22,6 +22,6 @@ steps:
     azureSubscription: 'SVCConnectionConnectivitySub'
     scriptType: 'ps'
     scriptLocation: 'scriptPath'
-    scriptPath: 'C:\_dev\IaC-Demo\fortigate\run-main.bicep-deployment.ps1'
+    scriptPath: 'C:\_dev\IaC-Demo\fortigate\run-main.bicep-az-deployment.ps1'
     powerShellErrorActionPreference: 'continue'
 
