@@ -49,7 +49,7 @@ param parPrivateDnsZones array
 
 //Fortigate parameters
 @allowed([
-  '7.0.12'
+  '7.2.8'
 ])
 param parFortiImageVersion string
 
@@ -88,7 +88,6 @@ var varPrivateSubnetId = resourceId(subscription().subscriptionId,parHubVnetRg,'
 @description('existing hub vnet resource group')
 resource resVnetRgExists 'Microsoft.Resources/resourceGroups@2022-09-01' existing = if (!parDeployVnet){
   name: parHubVnetName
-  location: parLocation
 }
 
 @description('existing hub vnet resource')

@@ -21,6 +21,8 @@ param parEnvironment = 'p'
 @maxLength(3)
 param parCustomerPrefix = 'wcl'
 
+param storageAccountName = '${parEnvironment}${parCustomerPrefix}sa1${parLocationPostfix}'
+
 param parKeyVaultName = '${parEnvironment}${parCustomerPrefix}-kv1-${parLocationPostfix}' 
 param parKeyVaultRg = '${parEnvironment}${parCustomerPrefix}-kv1-${parLocationPostfix}-rg' 
 param parKeyVaultSecretsName = 'FortigateAdminPassword'
@@ -48,7 +50,7 @@ param parBaseTagSet = {
   CreationDate: '22.09.2023'
 }
 
-param parFortiImageVersion = '7.0.12'
+param parFortiImageVersion = '7.2.8'
 // Identifies whether to to use PAYG (on demand licensing) or BYOL license model (where license is purchased separately)
 param parFortiImageSku = 'fortinet_fg-vm'
 param parFortiInstance = 'Standard_DS3_v2'
