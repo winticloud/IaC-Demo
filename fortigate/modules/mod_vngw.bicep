@@ -8,6 +8,7 @@ param parP2sVpnSubnetPrefix string
 param parCustomerPublicIP string
 param parHubVnet string
 param parBaseTagSet object
+param parDeployVpnGw bool
 
 var varAadTenant = 'https://login.microsoftonline.com/${tenant().tenantId}'
 var varAadIssuer = 'https://sts.windows.net/${tenant().tenantId}/'
@@ -18,7 +19,7 @@ var varAadAudience = '41b23e61-6c1e-4545-b367-cd054e0ed4b4' //statice value for 
 // var varAuthKey = base64('NeedsToBeChang3dAfterDepl0yment')
 param parAuthKey string = 'uniqueString(newGuid(), utcNow())'
 
-resource resVpnGwIPs 'Microsoft.Network/publicIPAddresses@2023-04-01' = [for i in range(0,3):{
+resource resVpnGwIPs 'Microsoft.Network/publicIPAddresses@2023-04-01' = [for i in range(0,3): {
   name: '${parVngwName}-pip${i+1}'
   location: parLocation
   sku: {

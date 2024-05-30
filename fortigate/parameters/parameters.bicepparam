@@ -12,6 +12,10 @@ param parDeployBastion = false
 @description('Specifies whether to deploy private DNS')
 param parDeployPrivateDns = false
 
+/// Specifies whether to deploy VPN Gateway.
+@description('Specifies whether to deploy a VPN Gateway')
+param parDeployVpnGw = false
+
 param parSubscriptionId = '3e93b848-f45a-4efa-ae91-e508f932bfda'
 param parLocation = 'switzerlandnorth'
 @maxLength(3)

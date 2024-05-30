@@ -9,6 +9,7 @@ param parBgpAsnLgw int
 param parBgpPeeringAddress string
 param parDeployBastion bool
 param parDeployPrivateDns bool
+param parDeployVpnGw bool
 param parBastionHostName string
 param parP2sPrefix string
 param parCustomerPublicIP string
@@ -43,7 +44,7 @@ module modVirtualNetworks 'mod_vnet.bicep' = [for loopNet in parVirtualNetworks:
   ]
 }]
 
-module modVngw 'mod_vngw.bicep' = {
+module modVngw 'mod_vngw.bicep' = if (parDeployVpnGw) {
   name: 'deploy-vpn-gateway'
   scope: resVirtualNetworkRg[0]
   params:{
@@ -57,6 +58,7 @@ module modVngw 'mod_vngw.bicep' = {
     parHubVnet: modVirtualNetworks[0].outputs.outVnetName
     parCustomerPublicIP: parCustomerPublicIP
     parBaseTagSet: parBaseTagSet
+    parDeployVpnGw: parDeployVpnGw
   }
   dependsOn: [
     modVirtualNetworks

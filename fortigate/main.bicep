@@ -12,6 +12,8 @@ param parDeployBastion bool = false
 @description('Specifies whether to deploy Private DNS Zones')
 param parDeployPrivateDns bool = false
 
+param parDeployVpnGw bool = false
+
 param parSubscriptionId string
 param parLocation string
 param parLocationPostfix string
@@ -156,6 +158,7 @@ module modConnectivity 'modules/mod_connectivity.bicep' = if (parDeployVnet) {
     parPrivateDnsRg: '${parEnvironment}${parCustomerPrefix}-privdns1-${parLocationPostfix}-rg'
     parPrivateDnsZones: parPrivateDnsZones
     parBaseTagSet: parBaseTagSet
+    parDeployVpnGw: parDeployVpnGw
   }
 }
 
