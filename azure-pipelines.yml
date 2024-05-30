@@ -5,27 +5,25 @@
 
 trigger: none
 
-pool:
-  name: Default 
-
-variables:
-  varTemplateFile: './fortigate/main.bicep'
-  varParameterFile: './fortigate/parameters/parameters.bicepparam'
-  varDeploymentName: 'fortigate-deployment'
-  varLocation: 'switzerlandnorth'
-  varResourceGroupName: 'pipeline-test'
-
-jobs:
-  - job: Deploy
+name: 'Pipeline templates'
+stages:
+- stage: Build
+  displayName: 'Securing pipelines with templates'
+  jobs:
+  - job: Build
+    displayName: 'Example Build Job'
+    pool:
+      vmImage: 'ubuntu-latest'
     steps:
-      - task: AzureResourceManagerTemplateDeployment@3
-        displayName: 'deploy bicep files'
-        inputs:
-          deploymentScope: 'Subscription'
-          azureResourceManagerConnection: 'SVCConnectionConnectivitySub'
-          subscriptionId: '3e93b848-f45a-4efa-ae91-e508f932bfda'
-          location: 'Switzerland North'
-          templateLocation: 'Linked artifact'
-          csmFile: $(varParameterFile)
-          csmParametersFile: $(varTemplateFile)
-          deploymentMode: 'Validation'
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'SVCConnectionConnectivitySub'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Running script using Managed Identity"
+          echo "Creating new RG rgfromMi3"
+          az group create -g rgfromMi3 -l switzerlandnorth
+
+#          azureResourceManagerConnection: 'SVCConnectionConnectivitySub'
+#          subscriptionId: '3e93b848-f45a-4efa-ae91-e508f932bfda'
