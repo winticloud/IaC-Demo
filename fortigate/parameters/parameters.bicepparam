@@ -17,7 +17,7 @@ param parLocation = 'switzerlandnorth'
 @maxLength(3)
 param parLocationPostfix = 'csn'
 @maxLength(1)
-param parEnvironment = 'p'
+param parEnvironment = 't'
 @maxLength(3)
 param parCustomerPrefix = 'wcl'
 
