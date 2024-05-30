@@ -28,7 +28,8 @@ param parKeyVaultRg = '${parEnvironment}${parCustomerPrefix}-kv1-${parLocationPo
 param parKeyVaultSecretsName = 'FortigateAdminPassword'
 
 param parAdminUsername = 'localadmin'
-param parAdminPasswordSecret = getSecret(parSubscriptionId, parKeyVaultRg, parKeyVaultName, parKeyVaultSecretsName)
+// param parAdminPasswordSecret = getSecret(parSubscriptionId, parKeyVaultRg, parKeyVaultName, parKeyVaultSecretsName)
+param parAdminPasswordSecret = 'P@ssw0rd1234'
 
 param parAdminUserObjectID = '' 
 param parVpnGatewayPSK = '' 
