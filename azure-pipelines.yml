@@ -19,4 +19,4 @@ stages:
           echo "Running script using Managed Identity"
           echo "Creating new RG rgfromMi3"
           #az group create -g rgfromMi3 -l switzerlandnorth
-          az deployment sub create --location './fortigate/main.bicep' --parameters './fortigate/parameters/parameters.bicepparam' --template-file './fortigate/main.bicep'
+          az deployment sub create --location switzerlandnorth --parameters './fortigate/parameters/parameters.bicepparam' --template-file './fortigate/main.bicep'
