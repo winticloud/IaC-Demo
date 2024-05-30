@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger: none
 
 name: 'Pipeline templates'
@@ -23,7 +18,5 @@ stages:
         inlineScript: |
           echo "Running script using Managed Identity"
           echo "Creating new RG rgfromMi3"
-          az group create -g rgfromMi3 -l switzerlandnorth
-
-#          azureResourceManagerConnection: 'SVCConnectionConnectivitySub'
-#          subscriptionId: '3e93b848-f45a-4efa-ae91-e508f932bfda'
+          #az group create -g rgfromMi3 -l switzerlandnorth
+          az deployment sub create --location './fortigate/main.bicep' --parameters './fortigate/parameters/parameters.bicepparam' --template-file './fortigate/main.bicep'
