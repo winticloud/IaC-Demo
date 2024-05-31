@@ -6,7 +6,7 @@ param parSubnets array
 var varLocation = resourceGroup().location
 
 
-resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for loopSubnet in parSubnets: if ((loopSubnet.Name != 'GatewaySubnet')  && (loopSubnet.Name != 'FirewallPublicSubnet') && (loopSubnet.Name != 'FirewallPrivateubnet')) {
+resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for loopSubnet in parSubnets: if ((loopSubnet.Name != 'GatewaySubnet')  && (loopSubnet.Name != 'FirewallPublicSubnet') && (loopSubnet.Name != 'FirewallPrivateSubnet')) {
   name: '${parVnetName}-nsg-${loopSubnet.name}'
   location: varLocation
   tags: union(parBaseTagSet, {

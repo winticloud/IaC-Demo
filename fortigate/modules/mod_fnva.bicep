@@ -50,6 +50,9 @@ resource resRouteTables 'Microsoft.Network/routeTables@2023-04-01' = {
 resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-04-01' = {
   name: '${parFortiName}-pip1'
   location: parLocation
+  tags: union(parBaseTagSet, {
+      Description: 'Public IP for ${parFortiName}'
+    })
   sku: {
     name: 'Standard'
   }
@@ -62,7 +65,7 @@ resource resFortiNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
   name: '${parFortiName}-nsg'
   location: parLocation
   tags: union(parBaseTagSet, {
-      Description: '${parFortiName}-nsg'
+      Description: 'NSG for ${parFortiName} interfaces'
     })
   properties: {
     securityRules: [
@@ -102,6 +105,9 @@ resource resFortiNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
 resource resFortiPublicNic 'Microsoft.Network/networkInterfaces@2023-04-01' = {
   name: '${parFortiName}-nic1'
   location: parLocation
+  tags: union(parBaseTagSet, {
+      Description: 'NIC for ${parFortiName}'
+    })
   properties: {
     ipConfigurations: [
       {
@@ -129,6 +135,9 @@ resource resFortiPublicNic 'Microsoft.Network/networkInterfaces@2023-04-01' = {
 resource resFortiPrivateNic 'Microsoft.Network/networkInterfaces@2023-04-01' = {
   name: '${parFortiName}-nic2'
   location: parLocation
+  tags: union(parBaseTagSet, {
+      Description: 'NIC for ${parFortiName}'
+    })
   properties: {
     ipConfigurations: [
       {
@@ -156,6 +165,7 @@ resource resFortiVm 'Microsoft.Compute/virtualMachines@2023-03-01' = {
   tags: union(parBaseTagSet, {
   Publisher: 'Fortinet'
   Provider:  '6EB3B02F-50E5-4A3E-8CB8-2E12925831VM'
+  Description: 'Fortigate virtual firewall'
   })
   identity: {
     type: 'SystemAssigned'

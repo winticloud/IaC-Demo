@@ -58,9 +58,9 @@ param parPrivateDnsZones = [
 // Tag Parameter
 param parBaseTagSet  = {
   Creator: 'XXX@baggenstos.ch'
-  CreationDate: 'XX.XX.XXXX'
-  Environment: 'Prod/Dev/Test'
-  CostBranch: 'TBD'
+  CreationDate: ''
+  Environment: 'Prod'
+  CostBranch: 'connectivity'
 }
 
 
