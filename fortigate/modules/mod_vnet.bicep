@@ -18,7 +18,7 @@ resource resVirtualNetwork 'Microsoft.Network/virtualNetworks@2022-11-01' = {
 name: parVnetName
   location: varLocation
   tags: union(parBaseTagSet, {
-      Description: 'Virtual Network {parVnetName}'
+      Description: 'Virtual Network ${parVnetName}'
     })
   properties: {
     addressSpace: {
