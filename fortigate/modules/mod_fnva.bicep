@@ -9,6 +9,7 @@ param parFortiImageSku string
 param parFortiPrivateNicIp string
 param parFortiPublicNicIp string
 param parAdminUsername string
+param parDescription string = 'Azure Bastion Host'
 @secure()
 param parAdminPassword string
 
@@ -57,9 +58,45 @@ resource resPublicIp 'Microsoft.Network/publicIPAddresses@2023-04-01' = {
   }
 }
 
-resource resFortiNsg 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
+resource resFortiNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
   name: '${parFortiName}-nsg'
   location: parLocation
+  tags: union(parBaseTagSet, {
+      Description: '${parFortiName}-nsg'
+    })
+  properties: {
+    securityRules: [
+      // Inbound Rules
+      {
+        name: 'AllowInternetInbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Inbound'
+          priority: 120
+          sourceAddressPrefix: 'Internet'
+          destinationAddressPrefix: '*'
+          protocol: 'Tcp'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
+        }
+      }
+    
+      // Outbound Rules
+      {
+        name: 'AllowInternetOutbound'
+        properties: {
+          access: 'Allow'
+          direction: 'Outbound'
+          priority: 120
+          sourceAddressPrefix: '*'
+          destinationAddressPrefix: 'Internet'
+          protocol: '*'
+          sourcePortRange: '*'
+          destinationPortRange: '*'
+        }
+      }
+    ]
+  }
 }
 
 resource resFortiPublicNic 'Microsoft.Network/networkInterfaces@2023-04-01' = {

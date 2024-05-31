@@ -62,14 +62,22 @@ param parFortiImageVersion string
 param parFortiImageSku string
 
 @allowed([
+  'Standard_D2s_v5'
+  'Standard_D4s_v5'
   'Standard_DS3_v2'
-  'Standard_DS4_v2'
-  'Standard_DS5_v2'
+  'Standard_F8s_v2'
 ])
 
 param parFortiInstance string
 param parFortiPrivateIp string
-param parBaseTagSet object
+
+// Tag Parameter
+param parBaseTagSet object = {
+  Creator: 'user@baggenstos.ch'
+  CreationDate: utcNow('dd.MM.yyyy')
+  Environment: 'Prod'
+  CostBranch: 'Connectivity'
+}
 
 // Keyvault Parameters
 param parKeyVaultName string 

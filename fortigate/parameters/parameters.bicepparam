@@ -50,15 +50,26 @@ param parPrivateDnsZones = [
   'privatelink.vaultcore.azure.net'
 ]
 
-param parBaseTagSet = {
+/* param parBaseTagSet = {
   Creator: 'hugh.jass@yourdomain.com'
-  CreationDate: '30.05.2024'
+  CreationDate: '31.05.2025'
+} */
+
+// Tag Parameter
+param parBaseTagSet  = {
+  Creator: 'XXX@baggenstos.ch'
+  CreationDate: 'XX.XX.XXXX'
+  Environment: 'Prod/Dev/Test'
+  CostBranch: 'TBD'
 }
+
+
+// set the Creator value of param parBaseTag to a new value using join
 
 param parFortiImageVersion = '7.2.8'
 // Identifies whether to to use PAYG (on demand licensing) or BYOL license model (where license is purchased separately)
 param parFortiImageSku = 'fortinet_fg-vm'
-param parFortiInstance = 'Standard_DS3_v2'
+param parFortiInstance = 'Standard_D2s_v5'
 param parFortiPrivateIp = '10.10.10.10'
 @description('IP Range for P2S VPN')
 param parP2sPrefix = '10.110.0.0/24'

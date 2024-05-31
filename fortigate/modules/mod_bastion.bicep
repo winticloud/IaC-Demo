@@ -3,6 +3,7 @@ param parBastionHostName string
 param parHubVnet string
 param parHubVnetRg string
 param parBaseTagSet object
+param parDescription string = 'Azure Bastion Host'
 
 resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
   name: '${parBastionHostName}-pip'
@@ -13,13 +14,17 @@ resource resBastionPublicIP 'Microsoft.Network/publicIPAddresses@2023-02-01' = {
   properties: {
     publicIPAllocationMethod: 'Static'
   }
-  tags: parBaseTagSet
+tags: union(parBaseTagSet, {
+      Description: 'Azure Bastion Public IP ${parBastionHostName}-pip'
+    })
 }
 
 resource resBastionNsg 'Microsoft.Network/networkSecurityGroups@2023-02-01' = {
   name: '${parHubVnet}-nsg-AzureBastionSubnet'
   location: parLocation
-  tags: parBaseTagSet
+  tags: union(parBaseTagSet, {
+      Description: 'Azure Bastion Host ${parBastionHostName} NSG'
+    })
   properties: {
     securityRules: [
       // Inbound Rules
@@ -185,5 +190,7 @@ resource resBastionHost 'Microsoft.Network/bastionHosts@2023-02-01' = {
       }
     ]
   }
-  tags: parBaseTagSet
+  tags: union(parBaseTagSet, {
+      Description: 'Azure Bastion Host'
+    })
 }

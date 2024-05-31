@@ -6,15 +6,20 @@ param parSubnets array
 var varLocation = resourceGroup().location
 
 
-resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for loopSubnet in parSubnets: if ((loopSubnet.Name != 'GatewaySubnet') && (loopSubnet.Name != 'AzureBastionSubnet')) {
+resource resNsgs 'Microsoft.Network/networkSecurityGroups@2023-02-01' = [for loopSubnet in parSubnets: if ((loopSubnet.Name != 'GatewaySubnet')  && (loopSubnet.Name != 'FirewallPublicSubnet') && (loopSubnet.Name != 'FirewallPrivateubnet')) {
   name: '${parVnetName}-nsg-${loopSubnet.name}'
   location: varLocation
+  tags: union(parBaseTagSet, {
+      Description: 'NSG ${parVnetName}-nsg-${loopSubnet.name}'
+    })
 }]
 
 resource resVirtualNetwork 'Microsoft.Network/virtualNetworks@2022-11-01' = {
 name: parVnetName
   location: varLocation
-  tags: parBaseTagSet
+  tags: union(parBaseTagSet, {
+      Description: 'Virtual Network {parVnetName}'
+    })
   properties: {
     addressSpace: {
       addressPrefixes: [
@@ -29,7 +34,7 @@ name: parVnetName
         privateEndpointNetworkPolicies: contains(loopSubnet, 'privateEndpointNetworkPolicies') ? loopSubnet.privateEndpointNetworkPolicies : null
         privateLinkServiceNetworkPolicies: contains(loopSubnet, 'privateLinkServiceNetworkPolicies') ? loopSubnet.privateLinkServiceNetworkPolicies : null
         serviceEndpoints: contains(loopSubnet, 'serviceEndpoints') ? loopSubnet.serviceEndpoints : null
-        networkSecurityGroup: loopSubnet.name != 'GatewaySubnet' && loopSubnet.name != 'AzureBastionSubnet' ? {
+        networkSecurityGroup: loopSubnet.name != 'GatewaySubnet' && loopSubnet.name != 'AzureBastionSubnet' && loopSubnet.name != 'FirewallPublicSubnet' && loopSubnet.name != 'FirewallPrivateSubnet'  ? {
           id: resNsgs[i].id
         } : null
       }
